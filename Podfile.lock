@@ -1,28 +1,16 @@
 PODS:
-  - DemoHelper (0.1):
-    - DropDown (~> 2.3.12)
-    - SnapKit (~> 4.2.0)
-  - DropDown (2.3.12)
-  - SnapKit (4.2.0)
+  - DemoHelper (0.1)
 
 DEPENDENCIES:
   - DemoHelper (from `./`)
-  - DropDown (= 2.3.12)
-
-SPEC REPOS:
-  https://github.com/cocoapods/specs.git:
-    - DropDown
-    - SnapKit
 
 EXTERNAL SOURCES:
   DemoHelper:
     :path: "./"
 
 SPEC CHECKSUMS:
-  DemoHelper: 40bd81322cbbb2eda13f15a3234ae60cf9f64d30
-  DropDown: 0bcc278799ec11a3d34ce1aac9367fbbaf5423d9
-  SnapKit: fe8a619752f3f27075cc9a90244d75c6c3f27e2a
+  DemoHelper: d18a27aa4a936cc99691d629c23c3703cc140f0d
 
-PODFILE CHECKSUM: fd7289cd6d9010bc154e1b4fc038c11d08fade55
+PODFILE CHECKSUM: 32f0e056032f90ad258aa131755a7c8728833344
 
 COCOAPODS: 1.7.2

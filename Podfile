@@ -5,7 +5,6 @@ target 'TestApp' do
   # Comment the next line if you don't want to use dynamic frameworks
   use_frameworks!
   pod 'DemoHelper', :path => './'
-  pod 'DropDown', '2.3.12'
   # Pods for DemoHelper
 
 end

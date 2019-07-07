@@ -10,8 +10,6 @@ Pod::Spec.new do |s|
   s.source       = { :git => "https://github.com/cjsliuj/DemoHelper.git", :tag => "#{s.version}" }
   s.source_files  = "Source/**/*.{swift,m,h}"
   s.public_header_files = 'Source/**/*.h'
-  s.dependency 'SnapKit', '~> 4.2.0'
-  s.dependency 'DropDown', '~> 2.3.12'
   s.swift_versions = ['4.2']
-
+  s.resources = 'Source/**/*.xib'
 end

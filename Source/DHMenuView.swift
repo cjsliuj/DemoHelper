@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import SnapKit
+//import SnapKit
 @objc public class DHMenuSection: NSObject {
     let title: String
     let rows: [DHMenuRow]
@@ -48,7 +48,7 @@ import SnapKit
     public func internalInit(){
         self.backgroundColor = UIColor.white
         _tbv = UITableView.init(frame: UIScreen.main.bounds, style: .grouped)
-        
+        _tbv.translatesAutoresizingMaskIntoConstraints = false
         _tbv.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         _tbv.delegate = self
         _tbv.dataSource = self
@@ -56,24 +56,54 @@ import SnapKit
         let v = UIView()
         v.backgroundColor = UIColor.white
         _tbv.backgroundView = v
-        _tbv.snp.makeConstraints { (maker) in
-            maker.edges.equalToSuperview()
+        
+        [NSLayoutConstraint.Attribute.leading,
+        NSLayoutConstraint.Attribute.top,
+        NSLayoutConstraint.Attribute.bottom,
+        NSLayoutConstraint.Attribute.trailing].forEach { (att) in
+            self.addConstraint(NSLayoutConstraint.init(item: _tbv,
+                                                       attribute: att,
+                                                       relatedBy: .equal,
+                                                       toItem: self,
+                                                       attribute:att,
+                                                       multiplier: 1,
+                                                       constant: 0))
         }
     }
     public func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let section = dataSource[section]
         let v = UIView()
+        
         v.backgroundColor = UIColor(red:0.87, green:0.93, blue:1.00, alpha:1.00)
         let lb = UILabel()
+        lb.translatesAutoresizingMaskIntoConstraints = false
         lb.text = section.title
         lb.textColor = UIColor(red:1.00, green:0.58, blue:0.06, alpha:1.00)
         lb.font = UIFont.boldSystemFont(ofSize: 16)
         v.addSubview(lb)
-        lb.snp.makeConstraints { (maker) in
-            maker.leading.equalToSuperview().offset(10)
-            maker.centerY.equalToSuperview()
-        }
+        v.addConstraint(NSLayoutConstraint.init(item: lb,
+                                                attribute: .leading,
+                                                relatedBy: .equal,
+                                                toItem: v,
+                                                attribute:.leading,
+                                                multiplier: 1,
+                                                constant: 10))
+
+        v.addConstraint(NSLayoutConstraint.init(item: lb,
+                                                attribute: .centerY,
+                                                relatedBy: .equal,
+                                                toItem: v,
+                                                attribute:.centerY,
+                                                multiplier: 1,
+                                                constant: 0))
+        
         return v
+    }
+    public func numberOfSections(in tableView: UITableView) -> Int {
+        return dataSource.count
+    }
+    public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return dataSource[section].rows.count
     }
     public func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 25
@@ -86,12 +116,7 @@ import SnapKit
     public func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         return 1
     }
-    public func numberOfSections(in tableView: UITableView) -> Int {
-        return dataSource.count
-    }
-    public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return dataSource[section].rows.count
-    }
+    
     public func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 30
     }
