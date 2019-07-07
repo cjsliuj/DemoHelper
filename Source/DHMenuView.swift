@@ -10,16 +10,18 @@ import Foundation
 //import SnapKit
 @objc public class DHMenuSection: NSObject {
     let title: String
-    let rows: [DHMenuRow]
+    var rows: [DHMenuRow]
+    
     @objc public init(title: String, rows: [DHMenuRow]) {
         self.title = title
         self.rows = rows
     }
 }
 @objc public class DHMenuRow: NSObject {
-    @objc public let title: String
-    let action: ((_ rowView: UIView)->Void)?
-    @objc public init(title: String, action: ((_ rowView: UIView)->Void)?){
+    @objc public var title: String
+    @objc public var tag: String = ""
+    let action: ((_ menuView: DHMenuView, _ row: DHMenuRow, _ rowView: UIView)->Void)?
+    @objc public init(title: String, action: ((_ menuView: DHMenuView, _ row: DHMenuRow, _ rowView: UIView)->Void)?){
         self.title = title
         self.action = action
     }
@@ -44,6 +46,24 @@ import Foundation
     public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         self.internalInit()
+    }
+    @objc public func updateRow(_ destRow: DHMenuRow){
+        if !dataSource.flatMap({return $0.rows}).contains(destRow) {
+            assert(false, "不包含改row，无法更新")
+        }
+        var toReplaceSectionIdx: Int!
+        var toReplaceRowIdx: Int!
+        for (secIndex, sec) in dataSource.enumerated(){
+            for (rowIndex, row) in sec.rows.enumerated(){
+                if row == destRow{
+                    toReplaceSectionIdx = secIndex
+                    toReplaceRowIdx = rowIndex
+                    break
+                }
+            }
+        }
+        dataSource[toReplaceSectionIdx].rows[toReplaceRowIdx] = destRow
+        _tbv.reloadRows(at: [IndexPath(row: toReplaceRowIdx, section: toReplaceSectionIdx)], with: .none)
     }
     public func internalInit(){
         self.backgroundColor = UIColor.white
@@ -134,7 +154,7 @@ import Foundation
         tableView.deselectRow(at: indexPath, animated: true)
         let section = dataSource[indexPath.section]
         let row = section.rows[indexPath.row]
-        row.action?(tableView.cellForRow(at: indexPath)!)
+        row.action?(self, row, tableView.cellForRow(at: indexPath)!)
         delegate?.dhMenuViewOnClickedRow?(menuView: self, row: row, rowView: tableView.cellForRow(at: indexPath)!)
     }
 }

@@ -17,12 +17,14 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    DHMenuRow * row1 = [[DHMenuRow alloc]initWithTitle:@"row1" action:^(UIView * rowView){
-        NSLog(@"on click row1");
+    DHMenuRow * row1 = [[DHMenuRow alloc]initWithTitle:@"row1" action:^(DHMenuView * menuView, DHMenuRow * row, UIView * rowView){
+        row.title = @"row1 change";
+        [menuView updateRow:row];
+        NSLog(@"on click %@",row.title);
     }];
     DHMenuSection * sec1 = [[DHMenuSection alloc]initWithTitle:@"test" rows:@[row1]];
     
-    DHMenuRow * row2 = [[DHMenuRow alloc]initWithTitle:@"row2" action:^(UIView * rowView){
+    DHMenuRow * row2 = [[DHMenuRow alloc]initWithTitle:@"row2" action:^(DHMenuView * menuView, DHMenuRow * row, UIView * rowView){
         NSLog(@"on click row2");
     }];
     DHMenuSection * sec2 = [[DHMenuSection alloc]initWithTitle:@"test" rows:@[row2]];
