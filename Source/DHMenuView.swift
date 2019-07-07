@@ -118,7 +118,7 @@ import Foundation
     }
     
     public func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 30
+        return 35
     }
     
     public func tableView(_ tableView: UITableView,
