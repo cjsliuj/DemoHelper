@@ -17,12 +17,12 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    DHMenuRow * row1 = [[DHMenuRow alloc]initWithTitle:@"row1" action:^{
+    DHMenuRow * row1 = [[DHMenuRow alloc]initWithTitle:@"row1" action:^(UIView * rowView){
         NSLog(@"on click row1");
     }];
     DHMenuSection * sec1 = [[DHMenuSection alloc]initWithTitle:@"test" rows:@[row1]];
     
-    DHMenuRow * row2 = [[DHMenuRow alloc]initWithTitle:@"row2" action:^{
+    DHMenuRow * row2 = [[DHMenuRow alloc]initWithTitle:@"row2" action:^(UIView * rowView){
         NSLog(@"on click row2");
     }];
     DHMenuSection * sec2 = [[DHMenuSection alloc]initWithTitle:@"test" rows:@[row2]];
@@ -31,8 +31,13 @@
     _menuView1.dataSource = @[sec1, sec2];
     _menuView1.delegate = self;
 }
-- (void)dhMenuViewOnClickedRowWithMenuView:(DHMenuView *)menuView row:(DHMenuRow *)row{
-    NSLog(@"xxx%@", row);
+
+- (void)dhMenuViewOnClickedRowWithMenuView:(DHMenuView *)menuView row:(DHMenuRow *)row rowView:(UIView *)rowView{
+
+    [rowView dhShowDropDownMenuWithTitles:@[@"1",@"2"] onSelectedHandler:^(NSInteger index,NSString * title) {
+        NSLog(@"%d %@", index, title);
+    }];
+
 }
 
 @end

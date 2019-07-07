@@ -18,8 +18,8 @@ import SnapKit
 }
 @objc public class DHMenuRow: NSObject {
     @objc public let title: String
-    let action: (()->Void)?
-    @objc public init(title: String, action: (()->Void)?){
+    let action: ((_ rowView: UIView)->Void)?
+    @objc public init(title: String, action: ((_ rowView: UIView)->Void)?){
         self.title = title
         self.action = action
     }
@@ -27,7 +27,7 @@ import SnapKit
 }
 @objc public protocol DHMenuViewDelegate: class{
     @objc optional
-    func dhMenuViewOnClickedRow(menuView: DHMenuView, row: DHMenuRow)
+    func dhMenuViewOnClickedRow(menuView: DHMenuView, row: DHMenuRow, rowView: UIView)
 }
 @objc public class DHMenuView: UIView,UITableViewDelegate,UITableViewDataSource{
     var _tbv: UITableView!
@@ -48,11 +48,14 @@ import SnapKit
     public func internalInit(){
         self.backgroundColor = UIColor.white
         _tbv = UITableView.init(frame: UIScreen.main.bounds, style: .grouped)
-        _tbv.backgroundColor = UIColor.white
+        
         _tbv.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         _tbv.delegate = self
         _tbv.dataSource = self
         self.addSubview(_tbv)
+        let v = UIView()
+        v.backgroundColor = UIColor.white
+        _tbv.backgroundView = v
         _tbv.snp.makeConstraints { (maker) in
             maker.edges.equalToSuperview()
         }
@@ -60,9 +63,10 @@ import SnapKit
     public func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let section = dataSource[section]
         let v = UIView()
+        v.backgroundColor = UIColor.gray
         let lb = UILabel()
         lb.text = section.title
-        lb.textColor = UIColor.brown
+        lb.textColor = UIColor.white
         lb.font = UIFont.boldSystemFont(ofSize: 16)
         v.addSubview(lb)
         lb.snp.makeConstraints { (maker) in
@@ -82,6 +86,9 @@ import SnapKit
     public func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         return 1
     }
+    public func numberOfSections(in tableView: UITableView) -> Int {
+        return dataSource.count
+    }
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return dataSource[section].rows.count
     }
@@ -99,7 +106,7 @@ import SnapKit
         tableView.deselectRow(at: indexPath, animated: true)
         let section = dataSource[indexPath.section]
         let row = section.rows[indexPath.row]
-        row.action?()
-        delegate?.dhMenuViewOnClickedRow?(menuView: self, row: row)
+        row.action?(tableView.cellForRow(at: indexPath)!)
+        delegate?.dhMenuViewOnClickedRow?(menuView: self, row: row, rowView: tableView.cellForRow(at: indexPath)!)
     }
 }

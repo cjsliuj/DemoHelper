@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -23,7 +23,6 @@
 		98603990C715EDBD685F2D2C /* Pods-TestApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TestApp.release.xcconfig"; path = "Target Support Files/Pods-TestApp/Pods-TestApp.release.xcconfig"; sourceTree = "<group>"; };
 		B8A0712804765C5A43DAD651 /* Pods-DemoHelper.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DemoHelper.release.xcconfig"; path = "Target Support Files/Pods-DemoHelper/Pods-DemoHelper.release.xcconfig"; sourceTree = "<group>"; };
 		C460E6CD22D23E5000B91FCA /* DemoHelper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DemoHelper.h; sourceTree = "<group>"; };
-		C460E6CE22D23E5000B91FCA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C460E6D522D23EDE00B91FCA /* DHMenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DHMenuView.swift; sourceTree = "<group>"; };
 		C460E6DB22D2436300B91FCA /* TestApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TestApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C460E6DD22D2436300B91FCA /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -35,7 +34,8 @@
 		C460E6E922D2436500B91FCA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		C460E6EB22D2436500B91FCA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C460E6EC22D2436500B91FCA /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		C460E6F122D2437E00B91FCA /* DemoHelper.podspec */ = {isa = PBXFileReference; lastKnownFileType = text; path = DemoHelper.podspec; sourceTree = "<group>"; };
+		C460E6F122D2437E00B91FCA /* DemoHelper.podspec */ = {isa = PBXFileReference; lastKnownFileType = text; path = DemoHelper.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		C460E6F322D24BB300B91FCA /* UIView+Ex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Ex.swift"; sourceTree = "<group>"; };
 		D9AA6817D4010CBFA03ECA1E /* Pods-TestApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TestApp.debug.xcconfig"; path = "Target Support Files/Pods-TestApp/Pods-TestApp.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -94,8 +94,8 @@
 		C460E6CC22D23E5000B91FCA /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				C460E6F222D24B9100B91FCA /* Extension */,
 				C460E6CD22D23E5000B91FCA /* DemoHelper.h */,
-				C460E6CE22D23E5000B91FCA /* Info.plist */,
 				C460E6D522D23EDE00B91FCA /* DHMenuView.swift */,
 			);
 			path = Source;
@@ -115,6 +115,14 @@
 				C460E6EC22D2436500B91FCA /* main.m */,
 			);
 			path = TestApp;
+			sourceTree = "<group>";
+		};
+		C460E6F222D24B9100B91FCA /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				C460E6F322D24BB300B91FCA /* UIView+Ex.swift */,
+			);
+			path = Extension;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -150,6 +158,7 @@
 				TargetAttributes = {
 					C460E6DA22D2436300B91FCA = {
 						CreatedOnToolsVersion = 10.2;
+						LastSwiftMigration = 1020;
 					};
 				};
 			};
@@ -386,6 +395,7 @@
 			baseConfigurationReference = D9AA6817D4010CBFA03ECA1E /* Pods-TestApp.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = TestApp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -394,6 +404,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.jerry.TestApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -403,6 +415,7 @@
 			baseConfigurationReference = 98603990C715EDBD685F2D2C /* Pods-TestApp.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = TestApp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -411,6 +424,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.jerry.TestApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
