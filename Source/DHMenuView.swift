@@ -63,10 +63,10 @@ import SnapKit
     public func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let section = dataSource[section]
         let v = UIView()
-        v.backgroundColor = UIColor.gray
+        v.backgroundColor = UIColor(red:0.87, green:0.93, blue:1.00, alpha:1.00)
         let lb = UILabel()
         lb.text = section.title
-        lb.textColor = UIColor.white
+        lb.textColor = UIColor(red:1.00, green:0.58, blue:0.06, alpha:1.00)
         lb.font = UIFont.boldSystemFont(ofSize: 16)
         v.addSubview(lb)
         lb.snp.makeConstraints { (maker) in
@@ -76,7 +76,7 @@ import SnapKit
         return v
     }
     public func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 30
+        return 25
     }
     
     public func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
@@ -91,6 +91,9 @@ import SnapKit
     }
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return dataSource[section].rows.count
+    }
+    public func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 30
     }
     
     public func tableView(_ tableView: UITableView,
